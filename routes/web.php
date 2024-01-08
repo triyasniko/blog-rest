@@ -9,15 +9,15 @@ $router->get('/', function () use ($router) {
 $router->post('/api/login', 'AuthController@login');
 $router->post('/api/register', 'AuthController@register');
 
-Route::group([
-    'prefix' => 'api'
-], function ($router) {
-    $router->get('/category','CategoryController@index');
-    $router->post('/category','CategoryController@store');
-    $router->get('/category/{id}','CategoryController@show');
-    $router->put('/category/{id}','CategoryController@update');
-    $router->delete('/category/{id}','CategoryController@destroy');
-});
+// Route::group([
+//     'prefix' => 'api'
+// ], function ($router) {
+//     $router->get('/category','CategoryController@index');
+//     $router->post('/category','CategoryController@store');
+//     $router->get('/category/{id}','CategoryController@show');
+//     $router->put('/category/{id}','CategoryController@update');
+//     $router->delete('/category/{id}','CategoryController@destroy');
+// });
 
 Route::group([
     'middleware'=>'auth',
@@ -27,20 +27,18 @@ Route::group([
     $router->post('/refresh', 'AuthController@refresh');
     $router->post('/user-profile', 'AuthController@me');
 
-    $router->get('/task','TaskController@index');
-    $router->post('/task','TaskController@store');
-    $router->get('/task/{id}','TaskController@show');
-    $router->put('/task/{id}','TaskController@update');
-    $router->delete('/task/{id}','TaskController@destroy');
+    $router->get('/job','JobApplicationController@index');
 
-    $router->get('/task-category','TaskCategoryController@index');
-    $router->post('/task-category','TaskCategoryController@store');
-    $router->get('/task-category/{id}','TaskCategoryController@show');
-    $router->put('/task-category/{id}','TaskCategoryController@update');
-    $router->delete('/task-category/{id}','TaskCategoryController@destroy');
+    $router->get('/position','PositionController@index');
+    $router->post('/position','PositionController@store');
+    $router->put('/position/{id}','PositionController@update');
+    $router->get('/position/{id}','PositionController@show');
+    $router->delete('/position/{id}','PositionController@destroy');
 
-    $router->get('/notification','NotificationController@index');
-    $router->post('/notification','NotificationController@store');
-    $router->get('/notification/{id}','NotificationController@show');
-    $router->delete('/notification/{id}','NotificationController@destroy');
+    $router->get('/company','CompanySectorController@index');
+    $router->post('/company','CompanySectorController@store');
+    $router->put('/company/{id}','CompanySectorController@update');
+    $router->get('/company/{id}','CompanySectorController@show');
+    $router->delete('/company/{id}','CompanySectorController@destroy');
+
 });

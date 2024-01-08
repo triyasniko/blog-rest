@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Task extends Model
+class Position extends Model
 {
     /**
      * @var string
-     */
-    protected $table = 'tasks';
+    */
+    protected $table = 'positions';
 
     /**
      * @var array

@@ -2,27 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
+use App\Models\JobApplication;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
-class TaskController extends Controller
+class JobApplicationController extends Controller
 {
     public function index()
     {
-        $tasks = Task::all();
-        // $user_id= auth()->user()->user_id;
+        $job = JobApplication::all();
 
         return response()->json([
             'success' => true,
             'message' =>'List TodoList',
-            'data'    => $tasks
+            'data'    => $job
         ], 200);
-        // return response()->json([
-        //     'message'=>'Masuk broo'
-        // ],200);
     }
+
     public function store(Request $request)
     {
         // return response()->json([
@@ -30,40 +28,41 @@ class TaskController extends Controller
         // ],200);
         // exit();
         $validator = Validator::make($request->all(), [
-            'task_name'   => 'required',
-            'due_date' => 'required',
+            'job_title'   => 'required',
+            'application_date' => 'required',
         ]);
 
         if ($validator->fails()) {
 
             return response()->json([
                 'success' => false,
-                'message' => 'Task Name/Due Date tidak boleh kosong!',
+                'message' => 'Job Title/Application Date tidak boleh kosong!',
                 'data'   => $validator->errors()
             ],401);
 
         } else {
 
-            $task = Task::create([
+            $job = JobApplication::create([
                 'user_id' => auth()->user()->user_id,
-                'task_name' => $request->input('task_name'),
-                'description'  => $request->input('description'),
-                'due_date' => $request->input('due_date'),
+                'job_title' => $request->input('job_title'),
+                'position_id'  => $request->input('position_id'),
+                'company_name' => $request->input('company_name'),
+                'companysector_id' => $request->input('companysector_id'),  
+                'application_date' => $request->input('application_date'),
                 'status' => $request->input('status'),
-                'priority' => $request->input('priority'),
 
             ]);
 
-            if ($task) {
+            if ($job) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Task Berhasil Disimpan!',
-                    'data' => $task
+                    'message' => 'Job Berhasil Disimpan!',
+                    'data' => $job
                 ], 201);
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Task Gagal Disimpan!',
+                    'message' => 'Job Gagal Disimpan!',
                 ], 400);
             }
 
@@ -71,74 +70,74 @@ class TaskController extends Controller
     }
     public function show($id)
     {
-        $task = Task::select("*")
-                    ->where("task_id",$id)
+        $job = JobApplication::select("*")
+                    ->where("application_id",$id)
                     ->get();
 
-        if ($task) {
+        if ($job) {
             return response()->json([
                 'success'   => true,
-                'message'   => 'Detail Task!',
-                'data'      => $task
+                'message'   => 'Detail Job!',
+                'data'      => $job
             ], 200);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Task Tidak Ditemukan!',
+                'message' => 'Job Tidak Ditemukan!',
             ], 404);
         }
     }
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'task_name'   => 'required',
-            'due_date' => 'required',
+            'job_title'   => 'required',
+            'application_date' => 'required',
         ]);
 
         if ($validator->fails()) {
 
             return response()->json([
                 'success' => false,
-                'message' => 'Task Name/Due Date Wajib Diisi!',
+                'message' => 'Job Title/Application Date tidak boleh kosong!',
                 'data'   => $validator->errors()
             ],401);
 
         } else {
 
-            $task = Task::where('task_id',$id)->update([
-                'task_name' => $request->input('task_name'),
-                'description'  => $request->input('description'),
-                'due_date' => $request->input('due_date'),
+            $job = JobApplication::where('application_id',$id)->update([
+                'job_title' => $request->input('job_title'),
+                'position_id'  => $request->input('position_id'),
+                'company_name' => $request->input('company_name'),
+                'companysector_id' => $request->input('companysector_id'),  
+                'application_date' => $request->input('application_date'),
                 'status' => $request->input('status'),
-                'priority' => $request->input('priority'),
             ]);
 
-            if ($task) {
+            if ($job) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Task Berhasil Diupdate!',
-                    'data' => $task
+                    'message' => 'Job Berhasil Diupdate!',
+                    'data' => $job
                 ], 201);
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Task Gagal Diupdate!',
+                    'message' => 'Job Gagal Diupdate!',
                 ], 400);
             }
         }
     }
+
     public function destroy($id)
     {
-        $task = Task::where('task_id',$id)->delete();
+        $job = JobApplication::where('application_id',$id)->delete();
 
-        if ($task) {
+        if ($job) {
             return response()->json([
                 'success' => true,
-                'message' => 'Task Berhasil Dihapus!',
+                'message' => 'Job Berhasil Dihapus!',
             ], 200);
         }
 
     }
-
-
 }

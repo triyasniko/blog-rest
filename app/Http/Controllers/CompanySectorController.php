@@ -2,126 +2,127 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TaskCategory;
+use App\Models\CompanySector;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
-class TaskCategoryController extends Controller
+class CompanySectorController extends Controller
 {
     public function index()
     {
-        $taskCategories = TaskCategory::all();
+        $company = CompanySector::all();
 
         return response()->json([
             'success' => true,
-            'message' =>'List Task Category',
-            'data'    => $taskCategories
+            'message' =>'List Category',
+            'data'    => $company
         ], 200);
     }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'task_id' => 'required',
-            'category_id'   => 'required',
+            'companysector_name'   => 'required',
         ]);
 
         if ($validator->fails()) {
 
             return response()->json([
                 'success' => false,
-                'message' => 'Task ID/Category ID tidak boleh kosong!',
+                'message' => 'Company Sector Name tidak boleh kosong!',
                 'data'   => $validator->errors()
             ],401);
 
         } else {
 
-            $taskCategory = TaskCategory::create([
-                'task_id' => $request->input('task_id'),
-                'category_id' => $request->input('category_id'),
+            $company = CompanySector::create([
+                'companysector_name' => $request->input('companysector_name')
             ]);
 
-            if ($taskCategory) {
+            if ($company) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Task Category Berhasil Disimpan!',
-                    'data' => $taskCategory
+                    'message' => 'Company Sector Berhasil Disimpan!',
+                    'data' => $company
                 ], 201);
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Task Category Gagal Disimpan!',
+                    'message' => 'Company Sector Gagal Disimpan!',
                 ], 400);
             }
 
         }
     }
+
     public function show($id)
     {
-        $taskCategory = TaskCategory::select("*")
-                    ->where("taskcategory_id",$id)
+        $company = CompanySector::select("*")
+                    ->where("companysector_id",$id)
                     ->get();
 
-        if ($taskCategory) {
+        if ($company) {
             return response()->json([
                 'success'   => true,
-                'message'   => 'Detail Category!',
-                'data'      => $taskCategory
+                'message'   => 'Detail Company Sector!',
+                'data'      => $company
             ], 200);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Category Tidak Ditemukan!',
+                'message' => 'Company Sector Tidak Ditemukan!',
             ], 404);
         }
     }
+
     public function update(Request $request, $id)
-    {
+    {   
+        // var_dump($request->all());
         $validator = Validator::make($request->all(), [
-            'task_id'   => 'required',
-            'category_id' => 'required',
+            'companysector_name'   => 'required'
         ]);
 
         if ($validator->fails()) {
 
             return response()->json([
                 'success' => false,
-                'message' => 'Task ID/Category ID Wajib Diisi!',
+                'message' => 'Company Sector Name Wajib Diisi!',
                 'data'   => $validator->errors()
             ],401);
 
         } else {
 
-            $taskCategory = TaskCategory::where('taskcategory_id',$id)->update([
-                'task_id' => $request->input('task_id'),
-                'category_id' => $request->input('category_id'),
+            $company = CompanySector::where('companysector_id',$id)->update([
+                'companysector_name' => $request->input('companysector_name')
             ]);
 
-            if ($taskCategory) {
+            if ($company) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Task Category Berhasil Diupdate!',
-                    'data' => $taskCategory
+                    'message' => 'Company Sector Berhasil Diupdate!',
+                    'data' => $company
                 ], 201);
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Task Category Gagal Diupdate!',
+                    'message' => 'Company Sector Gagal Diupdate!',
                 ], 400);
             }
         }
     }
+
     public function destroy($id)
     {
-        $taskCategory = TaskCategory::where('taskcategory_id',$id)->delete();
+        $company = CompanySector::where('companysector_id',$id)->delete();
 
-        if ($taskCategory) {
+        if ($company) {
             return response()->json([
                 'success' => true,
-                'message' => 'Task Category Berhasil Dihapus!',
+                'message' => 'Company Sector Berhasil Dihapus!',
             ], 200);
         }
 
     }
-
 }
