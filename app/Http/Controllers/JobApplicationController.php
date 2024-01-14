@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobApplication;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -16,7 +17,7 @@ class JobApplicationController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' =>'List TodoList',
+            'message' =>'List Job',
             'data'    => $job
         ], 200);
     }
@@ -50,10 +51,13 @@ class JobApplicationController extends Controller
                 'companysector_id' => $request->input('companysector_id'),  
                 'application_date' => $request->input('application_date'),
                 'status' => $request->input('status'),
-
             ]);
 
             if ($job) {
+                $notification = Notification::create([
+                    'user_id' => auth()->user()->user_id,
+                    'notification_message' =>'Kamu berhasil menambah job application baru'
+                ]);
                 return response()->json([
                     'success' => true,
                     'message' => 'Job Berhasil Disimpan!',

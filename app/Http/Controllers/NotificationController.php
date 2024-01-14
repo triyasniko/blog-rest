@@ -23,11 +23,6 @@ class NotificationController extends Controller
     }
     public function store(Request $request)
     {
-        // return response()->json([
-        //     'success' => true,
-        //     'message' =>'Test Notif Carbon',
-        //     'data'    => Carbon::today()
-        // ], 200);
 
         $todayTasksCount = Task::where('user_id', auth()->user()->user_id)
                             ->whereDate('due_date', Carbon::today())

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('company_name');
             $table->bigInteger('companysector_id');
             $table->string('application_date');
-            $table->enum('status', ['pending', 'accepted', 'rejected)'])->default('pending');
+            $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
             $table->timestamps();
         });
 

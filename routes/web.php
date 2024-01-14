@@ -9,16 +9,6 @@ $router->get('/', function () use ($router) {
 $router->post('/api/login', 'AuthController@login');
 $router->post('/api/register', 'AuthController@register');
 
-// Route::group([
-//     'prefix' => 'api'
-// ], function ($router) {
-//     $router->get('/category','CategoryController@index');
-//     $router->post('/category','CategoryController@store');
-//     $router->get('/category/{id}','CategoryController@show');
-//     $router->put('/category/{id}','CategoryController@update');
-//     $router->delete('/category/{id}','CategoryController@destroy');
-// });
-
 Route::group([
     'middleware'=>'auth',
     'prefix' => 'api'
@@ -28,6 +18,10 @@ Route::group([
     $router->post('/user-profile', 'AuthController@me');
 
     $router->get('/job','JobApplicationController@index');
+    $router->post('/job','JobApplicationController@store');
+    $router->put('/job/{id}','JobApplicationController@update');
+    $router->get('/job/{id}','JobApplicationController@show');
+    $router->delete('/job/{id}','JobApplicationController@show');
 
     $router->get('/position','PositionController@index');
     $router->post('/position','PositionController@store');
@@ -41,4 +35,7 @@ Route::group([
     $router->get('/company/{id}','CompanySectorController@show');
     $router->delete('/company/{id}','CompanySectorController@destroy');
 
+    $router->get('/notification','NotificationController@index');
+    $router->get('/notification/{id}','NotificationController@show');
+    $router->delete('/notification/{id}','NotificationController@destroy');
 });
