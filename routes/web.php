@@ -21,7 +21,7 @@ Route::group([
     $router->post('/job','JobApplicationController@store');
     $router->put('/job/{id}','JobApplicationController@update');
     $router->get('/job/{id}','JobApplicationController@show');
-    $router->delete('/job/{id}','JobApplicationController@show');
+    $router->delete('/job/{id}','JobApplicationController@destroy');
 
     $router->get('/position','PositionController@index');
     $router->post('/position','PositionController@store');

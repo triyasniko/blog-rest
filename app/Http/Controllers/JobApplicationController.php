@@ -13,12 +13,17 @@ class JobApplicationController extends Controller
 {
     public function index()
     {
-        $job = JobApplication::all();
+        $jobs = DB::table('jobapplications')
+        ->join('positions', 'jobapplications.position_id', '=', 'positions.position_id')
+        ->join('company_sectors', 'jobapplications.companysector_id', '=', 'company_sectors.companysector_id')
+        ->select('jobapplications.application_id','jobapplications.user_id', 'jobapplications.job_title', 'jobapplications.position_id', 'jobapplications.company_name', 'jobapplications.companysector_id', 'jobapplications.application_date', 'jobapplications.status', 'positions.position_name', 'company_sectors.companysector_name')
+        ->where('user_id',auth()->user()->user_id)
+        ->get();
 
         return response()->json([
             'success' => true,
             'message' =>'List Job',
-            'data'    => $job
+            'data'    => $jobs
         ], 200);
     }
 
