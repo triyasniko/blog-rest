@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class JobApplication extends Model
+class Category extends Model
 {
         /**
      * @var string
      */
-    protected $table = 'jobapplications';
+    protected $table = 'categories';
 
     /**
      * @var array

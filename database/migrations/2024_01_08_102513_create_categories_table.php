@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('company_sectors', function (Blueprint $table) {
-            $table->bigIncrements('companysector_id'); // Primary key
-            $table->string('companysector_name');
+        Schema::create('categories', function (Blueprint $table) {
+            $table->bigIncrements('category_id'); // Primary key
+            $table->string('category_name');
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('company_sectors');
+        Schema::dropIfExists('categories');
     }
 };

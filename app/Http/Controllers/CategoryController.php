@@ -2,55 +2,55 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Position;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
-class PositionController extends Controller
+class CategoryController extends Controller
 {
     public function index()
     {
-        $positions = Position::all();
+        $category = Category::all();
 
         return response()->json([
             'success' => true,
             'message' =>'List Category',
-            'data'    => $positions
+            'data'    => $category
         ], 200);
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'position_name'   => 'required',
+            'category_name'   => 'required',
         ]);
 
         if ($validator->fails()) {
 
             return response()->json([
                 'success' => false,
-                'message' => 'Position Name tidak boleh kosong!',
+                'message' => 'Category Name tidak boleh kosong!',
                 'data'   => $validator->errors()
             ],401);
 
         } else {
 
-            $position = Position::create([
-                'position_name' => $request->input('position_name')
+            $category = Category::create([
+                'category_name' => $request->input('category_name')
             ]);
 
-            if ($position) {
+            if ($category) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Position Berhasil Disimpan!',
-                    'data' => $position
+                    'message' => 'Category Berhasil Disimpan!',
+                    'data' => $category
                 ], 201);
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Position Gagal Disimpan!',
+                    'message' => 'Category Gagal Disimpan!',
                 ], 400);
             }
 
@@ -59,20 +59,20 @@ class PositionController extends Controller
 
     public function show($id)
     {
-        $position = Position::select("*")
-                    ->where("position_id",$id)
+        $category = Category::select("*")
+                    ->where("category_id",$id)
                     ->get();
 
-        if ($position) {
+        if ($category) {
             return response()->json([
                 'success'   => true,
-                'message'   => 'Detail Posisi!',
-                'data'      => $position
+                'message'   => 'Detail Category!',
+                'data'      => $category
             ], 200);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Posisi Tidak Ditemukan!',
+                'message' => 'Category Tidak Ditemukan!',
             ], 404);
         }
     }
@@ -81,33 +81,33 @@ class PositionController extends Controller
     {   
         // var_dump($request->all());
         $validator = Validator::make($request->all(), [
-            'position_name'   => 'required'
+            'category_name'   => 'required'
         ]);
 
         if ($validator->fails()) {
 
             return response()->json([
                 'success' => false,
-                'message' => 'Position Name Wajib Diisi!',
+                'message' => 'Category Name Wajib Diisi!',
                 'data'   => $validator->errors()
             ],401);
 
         } else {
 
-            $position = Position::where('position_id',$id)->update([
-                'position_name' => $request->input('position_name')
+            $category = Category::where('category_id',$id)->update([
+                'category_name' => $request->input('category_name')
             ]);
 
-            if ($position) {
+            if ($category) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Posisi Berhasil Diupdate!',
-                    'data' => $position
+                    'message' => 'Category Berhasil Diupdate!',
+                    'data' => $category
                 ], 201);
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Posisi Gagal Diupdate!',
+                    'message' => 'Category Gagal Diupdate!',
                 ], 400);
             }
         }
@@ -115,12 +115,12 @@ class PositionController extends Controller
 
     public function destroy($id)
     {
-        $position = Position::where('position_id',$id)->delete();
+        $category = Category::where('category_id',$id)->delete();
 
-        if ($position) {
+        if ($category) {
             return response()->json([
                 'success' => true,
-                'message' => 'Posisi Berhasil Dihapus!',
+                'message' => 'Category Berhasil Dihapus!',
             ], 200);
         }
 

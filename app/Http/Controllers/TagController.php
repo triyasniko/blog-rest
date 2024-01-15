@@ -2,55 +2,55 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CompanySector;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
-class CompanySectorController extends Controller
+class TagController extends Controller
 {
     public function index()
     {
-        $company = CompanySector::all();
+        $tags = Tag::all();
 
         return response()->json([
             'success' => true,
-            'message' =>'List Category',
-            'data'    => $company
+            'message' =>'List Tag',
+            'data'    => $tags
         ], 200);
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'companysector_name'   => 'required',
+            'tag_name'   => 'required',
         ]);
 
         if ($validator->fails()) {
 
             return response()->json([
                 'success' => false,
-                'message' => 'Company Sector Name tidak boleh kosong!',
+                'message' => 'Tag Name tidak boleh kosong!',
                 'data'   => $validator->errors()
             ],401);
 
         } else {
 
-            $company = CompanySector::create([
-                'companysector_name' => $request->input('companysector_name')
+            $tag = Tag::create([
+                'tag_name' => $request->input('tag_name')
             ]);
 
-            if ($company) {
+            if ($tag) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Company Sector Berhasil Disimpan!',
-                    'data' => $company
+                    'message' => 'Tag Berhasil Disimpan!',
+                    'data' => $tag
                 ], 201);
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Company Sector Gagal Disimpan!',
+                    'message' => 'Tag Gagal Disimpan!',
                 ], 400);
             }
 
@@ -59,20 +59,20 @@ class CompanySectorController extends Controller
 
     public function show($id)
     {
-        $company = CompanySector::select("*")
-                    ->where("companysector_id",$id)
+        $tag = Tag::select("*")
+                    ->where("tag_id",$id)
                     ->get();
 
-        if ($company) {
+        if ($tag) {
             return response()->json([
                 'success'   => true,
-                'message'   => 'Detail Company Sector!',
-                'data'      => $company
+                'message'   => 'Detail Tag!',
+                'data'      => $tag
             ], 200);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Company Sector Tidak Ditemukan!',
+                'message' => 'Tag Tidak Ditemukan!',
             ], 404);
         }
     }
@@ -81,33 +81,33 @@ class CompanySectorController extends Controller
     {   
         // var_dump($request->all());
         $validator = Validator::make($request->all(), [
-            'companysector_name'   => 'required'
+            'tag_name'   => 'required'
         ]);
 
         if ($validator->fails()) {
 
             return response()->json([
                 'success' => false,
-                'message' => 'Company Sector Name Wajib Diisi!',
+                'message' => 'Tag Name Wajib Diisi!',
                 'data'   => $validator->errors()
             ],401);
 
         } else {
 
-            $company = CompanySector::where('companysector_id',$id)->update([
-                'companysector_name' => $request->input('companysector_name')
+            $tag = Tag::where('tag_id',$id)->update([
+                'tag_name' => $request->input('tag_name')
             ]);
 
-            if ($company) {
+            if ($tag) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Company Sector Berhasil Diupdate!',
-                    'data' => $company
+                    'message' => 'Tag Berhasil Diupdate!',
+                    'data' => $tag
                 ], 201);
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Company Sector Gagal Diupdate!',
+                    'message' => 'Tag Gagal Diupdate!',
                 ], 400);
             }
         }
@@ -115,12 +115,12 @@ class CompanySectorController extends Controller
 
     public function destroy($id)
     {
-        $company = CompanySector::where('companysector_id',$id)->delete();
+        $tag = Tag::where('tag_id',$id)->delete();
 
-        if ($company) {
+        if ($tag) {
             return response()->json([
                 'success' => true,
-                'message' => 'Company Sector Berhasil Dihapus!',
+                'message' => 'Tag Berhasil Dihapus!',
             ], 200);
         }
 

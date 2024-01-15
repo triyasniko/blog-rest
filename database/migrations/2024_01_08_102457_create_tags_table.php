@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('positions', function (Blueprint $table) {
-            $table->bigIncrements('position_id'); // Primary key
-            $table->string('position_name');
+        Schema::create('tags', function (Blueprint $table) {
+            $table->bigIncrements('tag_id'); // Primary key
+            $table->string('tag_name');
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('positions');
+        Schema::dropIfExists('tags');
     }
 };

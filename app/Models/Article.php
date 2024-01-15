@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CompanySector extends Model
+class Article extends Model
 {
         /**
      * @var string
      */
-    protected $table = 'company_sectors';
+    protected $table = 'articles';
 
     /**
      * @var array
